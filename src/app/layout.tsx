@@ -31,13 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
+        {/* <QueryProvider> */}
           <TooltipProvider>
             {children}
             <Toaster />
             <Sonner />
           </TooltipProvider>
-        </QueryProvider>
+        {/* </QueryProvider> */}
       </body>
     </html>
   );

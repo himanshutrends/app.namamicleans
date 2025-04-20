@@ -1,11 +1,11 @@
 
 import { Home, User, ShoppingCart, Calendar } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import Link from "next/link";
+
+import { usePathname } from "next/navigation";
 
 const BottomNavigation = () => {
-  const location = useLocation();
-  const currentPath = location.pathname;
-  
+  const currentPath = usePathname();
   const navItems = [
     {
       icon: Home,
@@ -36,10 +36,8 @@ const BottomNavigation = () => {
         return (
           <Link
             key={item.path}
-            to={item.path}
-            className={`flex flex-col items-center gap-1 ${
-              isActive ? 'text-teal-600' : 'text-gray-500'
-            }`}
+            href={item.path}
+            className={`flex flex-col items-center gap-1 ${isActive ? 'text-teal-600' : 'text-gray-500'}`}
           >
             <item.icon size={20} className={isActive ? 'animate-bounce-slow' : ''} />
             <span className="text-[10px]">{item.label}</span>

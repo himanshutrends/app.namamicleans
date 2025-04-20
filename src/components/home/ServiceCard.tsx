@@ -1,6 +1,7 @@
 
-import { Link } from "react-router-dom";
+
 import { Star } from "lucide-react";
+import Link from "next/link";
 
 interface ServiceCardProps {
   id: string;
@@ -24,7 +25,7 @@ const ServiceCard = ({
   if (horizontal) {
     return (
       <Link
-        to={`/service/${id}`}
+        href={`/service/${id}`}
         className="flex bg-white rounded-xl overflow-hidden card-shadow service-card"
       >
         <img
@@ -53,7 +54,7 @@ const ServiceCard = ({
 
   return (
     <Link
-      to={`/service/${id}`}
+      href={`/service/${id}`}
       className="bg-white rounded-xl overflow-hidden service-card"
     >
       <img
