@@ -1,5 +1,6 @@
+"use client";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { ChevronLeft, User, Mail, Phone, MapPin, CreditCard, LogOut, ChevronRight, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
@@ -37,7 +38,7 @@ const ProfileSection = ({ icon, title, value, linkTo }: {
   );
   
   if (linkTo) {
-    return <Link to={linkTo}>{content}</Link>;
+    return <Link href={linkTo}>{content}</Link>;
   }
   
   return content;
@@ -51,7 +52,7 @@ const Profile = () => {
       {/* Header */}
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link to="/" className="text-gray-800">
+          <Link href="/" className="text-gray-800">
             <ChevronLeft size={24} />
           </Link>
           <h1 className="text-lg font-semibold">My Profile</h1>
@@ -140,7 +141,7 @@ const Profile = () => {
           <Separator className="mb-2" />
           
           <div className="space-y-1">
-            <Link to="/help" className="flex items-center justify-between py-3">
+            <Link href="/help" className="flex items-center justify-between py-3">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,7 +155,7 @@ const Profile = () => {
             
             <Separator />
             
-            <Link to="/terms" className="flex items-center justify-between py-3">
+            <Link href="/terms" className="flex items-center justify-between py-3">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-gray-50 rounded-full flex items-center justify-center">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

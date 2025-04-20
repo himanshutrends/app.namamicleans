@@ -1,19 +1,18 @@
-
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle2, Calendar, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/layout/BottomNavigation";
 import confetti from "canvas-confetti";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const BookingSuccess = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [booking, setBooking] = useState<any>(null);
   
   useEffect(() => {
     // Get booking info from URL
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(window.location.search);
     const bookingInfo = params.get('info');
     
     if (bookingInfo) {
@@ -25,12 +24,12 @@ const BookingSuccess = () => {
       }
     } else {
       // If no booking info is provided, redirect to home
-      navigate("/");
+      router.push("/");
     }
     
     // Trigger confetti effect
     shootConfetti();
-  }, [location, navigate]);
+  }, [router]);
   
   const shootConfetti = () => {
     const duration = 3 * 1000;
@@ -128,11 +127,11 @@ const BookingSuccess = () => {
         {/* Actions */}
         <div className="space-y-4">
           <Button asChild className="w-full bg-teal-600 hover:bg-teal-700">
-            <Link to="/bookings">View My Bookings</Link>
+            <Link href="/bookings">View My Bookings</Link>
           </Button>
           
           <Button asChild variant="outline" className="w-full">
-            <Link to="/">Book Another Service</Link>
+            <Link href="/">Book Another Service</Link>
           </Button>
         </div>
       </div>

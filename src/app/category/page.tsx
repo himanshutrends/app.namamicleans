@@ -1,5 +1,6 @@
-
-import { useParams, Link } from "react-router-dom";
+"use client";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { ChevronLeft, Search, Filter } from "lucide-react";
 import BottomNavigation from "@/components/layout/BottomNavigation";
 import ServiceCard from "@/components/home/ServiceCard";
@@ -8,7 +9,8 @@ import { categories } from "@/data/categories";
 import { services } from "@/data/services";
 
 const CategoryPage = () => {
-  const { id } = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   
   // Find the category
   const category = categories.find(cat => cat.id === id);
@@ -21,7 +23,7 @@ const CategoryPage = () => {
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h2 className="text-xl font-semibold mb-2">Category not found</h2>
         <p className="text-gray-600 mb-4">The category you're looking for doesn't exist or may have been removed.</p>
-        <Link to="/" className="bg-teal-600 text-white px-4 py-2 rounded-full">
+        <Link href="/" className="bg-teal-600 text-white px-4 py-2 rounded-full">
           Go back to home
         </Link>
       </div>
@@ -33,7 +35,7 @@ const CategoryPage = () => {
       {/* Header */}
       <header className="bg-teal-600 px-4 py-3 sticky top-0 z-20">
         <div className="flex items-center gap-3">
-          <Link to="/" className="text-white">
+          <Link href="/" className="text-white">
             <ChevronLeft size={24} />
           </Link>
           <h1 className="text-white text-lg font-semibold">{category.name} Services</h1>

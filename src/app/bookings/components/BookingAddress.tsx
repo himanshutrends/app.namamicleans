@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from "react";
-import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { ChevronLeft, Home, Building, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,10 +39,10 @@ interface Vehicle {
 }
 
 const BookingAddress = () => {
-  const [searchParams] = useSearchParams();
-  const planId = searchParams.get("planId") || "";
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id');
+  const planId = searchParams.get('planId') || "";
   
   const [service, setService] = useState<any>(null);
   const [addressType, setAddressType] = useState<string>("saved");
@@ -105,7 +105,7 @@ const BookingAddress = () => {
       vehicle: vehicle
     };
     
-    navigate(`/booking/${id}/time?planId=${planId}&info=${encodeURIComponent(JSON.stringify(bookingData))}`);
+    router.push(`/booking/${id}/time?planId=${planId}&info=${encodeURIComponent(JSON.stringify(bookingData))}`);
   };
   
   const isFormValid = () => {
@@ -130,7 +130,7 @@ const BookingAddress = () => {
       {/* Header */}
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link to={`/service/${id}`} className="text-gray-800">
+          <Link href={`/service/${id}`} className="text-gray-800">
             <ChevronLeft size={24} />
           </Link>
           <h1 className="text-lg font-semibold">Enter Address</h1>

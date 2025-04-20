@@ -1,19 +1,18 @@
-
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { XCircle, RefreshCw, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import BottomNavigation from "@/components/layout/BottomNavigation";
 
 const BookingFailed = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [errorInfo, setErrorInfo] = useState<any>(null);
   
   useEffect(() => {
     // Get error info from URL
-    const params = new URLSearchParams(location.search);
-    const errorData = params.get('error');
+    const errorData = searchParams.get('error');
     
     if (errorData) {
       try {
@@ -31,17 +30,16 @@ const BookingFailed = () => {
         code: "PAYMENT_FAILED"
       });
     }
-  }, [location]);
+  }, [searchParams]);
   
   // Handler to retry booking
   const handleRetry = () => {
-    const params = new URLSearchParams(location.search);
-    const returnUrl = params.get('returnUrl');
+    const returnUrl = searchParams.get('returnUrl');
     
     if (returnUrl) {
-      navigate(returnUrl);
+      router.push(returnUrl);
     } else {
-      navigate(-1);
+      router.back();
     }
   };
   
@@ -91,7 +89,7 @@ const BookingFailed = () => {
           </Button>
           
           <Button asChild variant="outline" className="w-full">
-            <Link to="/">Return to Home</Link>
+            <Link href="/">Return to Home</Link>
           </Button>
           
           <Button asChild variant="link" className="w-full">

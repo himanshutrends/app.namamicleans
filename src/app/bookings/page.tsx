@@ -1,6 +1,6 @@
-
+"use client";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import Link from 'next/link';
 import { Calendar, Clock, Filter, Package, Car, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -108,7 +108,7 @@ const SubscriptionCard = ({ subscription }: { subscription: Subscription }) => {
 
 const BookingItem = ({ booking }: { booking: Booking }) => {
   return (
-    <Link to={`/bookings/${booking.id}`} className="block">
+    <Link href={`/bookings/${booking.id}`} className="block">
       <div className="border border-gray-100 rounded-lg p-3 mb-2 hover:bg-gray-50 transition-colors">
         <div className="flex justify-between items-start">
           <div>
@@ -224,7 +224,7 @@ const Bookings = () => {
                 <h3 className="text-gray-800 font-medium">No subscriptions found</h3>
                 <p className="text-gray-500 mt-1">You haven't subscribed to any services yet</p>
                 <Button asChild className="mt-4 bg-teal-600 hover:bg-teal-700">
-                  <Link to="/">Browse Services</Link>
+                  <Link href="/">Browse Services</Link>
                 </Button>
               </div>
             )}
@@ -242,7 +242,7 @@ const Bookings = () => {
                   <div className="mb-6">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">Upcoming Bookings</h3>
                     {upcomingBookings.map(booking => (
-                      <Link to={`/bookings/${booking.id}`} key={booking.id} className="block">
+                      <Link href={`/bookings/${booking.id}`} key={booking.id} className="block">
                         <div className="bg-white rounded-xl shadow-sm p-4 mb-3">
                           <div className="flex gap-4">
                             <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100">
@@ -286,7 +286,7 @@ const Bookings = () => {
                   <div>
                     <h3 className="text-sm font-medium text-gray-700 mb-3">Completed Bookings</h3>
                     {completedBookings.map(booking => (
-                      <Link to={`/bookings/${booking.id}`} key={booking.id} className="block">
+                      <Link href={`/bookings/${booking.id}`} key={booking.id} className="block">
                         <div className="bg-white rounded-xl shadow-sm p-4 mb-3">
                           <div className="flex gap-4">
                             <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-100">
@@ -334,7 +334,7 @@ const Bookings = () => {
                 <h3 className="text-gray-800 font-medium">No bookings found</h3>
                 <p className="text-gray-500 mt-1">You haven't made any bookings yet</p>
                 <Button asChild className="mt-4 bg-teal-600 hover:bg-teal-700">
-                  <Link to="/">Book Now</Link>
+                  <Link href="/">Book Now</Link>
                 </Button>
               </div>
             )}

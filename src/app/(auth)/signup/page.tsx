@@ -1,6 +1,6 @@
-
+"use client";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -63,7 +63,7 @@ const Signup = () => {
               </Button>
               <p className="text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
-                <Link to="/login" className="text-primary hover:underline">
+                <Link href="/login" className="text-primary hover:underline">
                   Sign in
                 </Link>
               </p>
@@ -83,7 +83,7 @@ const Signup = () => {
                   render={({ slots }) => (
                     <InputOTPGroup className="gap-2 flex justify-center">
                       {slots.map((slot, index) => (
-                        <InputOTPSlot key={index} {...slot} />
+                        <InputOTPSlot key={index} index={index} {...slot} />
                       ))}
                     </InputOTPGroup>
                   )}

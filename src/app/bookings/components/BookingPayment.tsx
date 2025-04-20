@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronLeft, CreditCard, Wallet, DollarSign, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { services } from "@/data/services";
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface PaymentMethod {
   id: string;
@@ -42,9 +42,8 @@ const frequencyDiscount = {
 };
 
 const BookingPayment = () => {
-  const [searchParams] = useSearchParams();
-  const infoParam = searchParams.get("info") || "";
-  const navigate = useNavigate();
+  const router = useRouter();
+  const infoParam = router.query.info || "";
   const { toast } = useToast();
   
   const [bookingInfo, setBookingInfo] = useState<any>({});
@@ -56,7 +55,7 @@ const BookingPayment = () => {
     // Parse booking info from URL
     if (infoParam) {
       try {
-        const parsedInfo = JSON.parse(decodeURIComponent(infoParam));
+        const parsedInfo = JSON.parse(decodeURIComponent(Array.isArray(infoParam) ? infoParam[0] : infoParam));
         setBookingInfo(parsedInfo);
         
         // Get service details
@@ -100,9 +99,9 @@ const BookingPayment = () => {
       if (success) {
         // Generate a random booking ID
         const bookingId = `BK${Math.floor(Math.random() * 1000000)}`;
-        navigate(`/booking/success?id=${bookingId}&info=${infoParam}`);
+        router.push(`/booking/success?id=${bookingId}&info=${infoParam}`);
       } else {
-        navigate("/booking/failed?reason=payment_failed");
+        router.push("/booking/failed?reason=payment_failed");
       }
       
       setIsProcessing(false);
@@ -122,7 +121,7 @@ const BookingPayment = () => {
       {/* Header */}
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link to={`/booking/${service.id}/time?frequency=${bookingInfo.frequency}&address=${encodeURIComponent(JSON.stringify(bookingInfo.address))}`} className="text-gray-800">
+          <Link href={`/booking/${service.id}/time?frequency=${bookingInfo.frequency}&address=${encodeURIComponent(JSON.stringify(bookingInfo.address))}`} className="text-gray-800">
             <ChevronLeft size={24} />
           </Link>
           <h1 className="text-lg font-semibold">Payment</h1>

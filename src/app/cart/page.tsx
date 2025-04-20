@@ -1,6 +1,7 @@
-
+"use client";
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, Trash2, Plus, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -29,7 +30,7 @@ const initialCartItems = [
 ];
 
 const Cart = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   
@@ -68,7 +69,7 @@ const Cart = () => {
     // In a real app, this would start the booking flow for each item
     // For simplicity, we'll just navigate to the booking page for the first item
     if (cartItems.length > 0) {
-      navigate(`/booking/${cartItems[0].serviceId}?frequency=${cartItems[0].frequency}`);
+      router.push(`/booking/${cartItems[0].serviceId}?frequency=${cartItems[0].frequency}`);
     }
   };
   
@@ -88,8 +89,8 @@ const Cart = () => {
       {/* Header */}
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link to="/" className="text-gray-800">
-            <ChevronLeft size={24} />
+          <Link href="/" className="text-gray-800">
+              <ChevronLeft size={24} />
           </Link>
           <h1 className="text-lg font-semibold">My Cart</h1>
           <span className="text-gray-500 text-sm ml-auto">
@@ -112,7 +113,9 @@ const Cart = () => {
             <h2 className="text-xl font-medium mb-2">Your cart is empty</h2>
             <p className="text-gray-500 mb-6 text-center">Looks like you haven't added any services to your cart yet</p>
             <Button asChild className="bg-teal-600 hover:bg-teal-700">
-              <Link to="/">Browse Services</Link>
+              <Link href="/">
+               Browse Services
+              </Link>
             </Button>
           </div>
         ) : (

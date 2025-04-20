@@ -1,6 +1,7 @@
-
+"use client";
 import { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { ChevronLeft, Calendar, Clock, MapPin, Car, Package, CalendarClock, Phone, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { 
@@ -26,8 +27,9 @@ const availableTimes = [
 ];
 
 const BookingDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const router = useRouter();
   const { toast } = useToast();
   
   const [booking, setBooking] = useState<Booking | null>(null);
@@ -100,7 +102,7 @@ const BookingDetail = () => {
         <h2 className="text-xl font-semibold mb-2">Booking not found</h2>
         <p className="text-gray-600 mb-4">The booking you're looking for doesn't exist or may have been removed</p>
         <Button asChild className="bg-teal-600 hover:bg-teal-700">
-          <Link to="/bookings">Go back to Bookings</Link>
+          <Link href="/bookings">Go back to Bookings</Link>
         </Button>
       </div>
     );
@@ -121,7 +123,7 @@ const BookingDetail = () => {
       {/* Header */}
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
-          <Link to="/bookings" className="text-gray-800">
+          <Link href="/bookings" className="text-gray-800">
             <ChevronLeft size={24} />
           </Link>
           <h1 className="text-lg font-semibold">Booking Details</h1>

@@ -1,6 +1,6 @@
-
 import { useState, useEffect } from "react";
-import { Link, useNavigate, useSearchParams, useParams } from "react-router-dom";
+import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { ChevronLeft, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
@@ -22,11 +22,11 @@ const availableTimeSlots = [
 ];
 
 const BookingDateTime = () => {
-  const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const planId = searchParams.get("planId") || "";
-  const infoParam = searchParams.get("info") || "";
-  const navigate = useNavigate();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get('id') || "";
+  const planId = searchParams.get('planId') || "";
+  const infoParam = searchParams.get('info') || "";
   
   const [bookingInfo, setBookingInfo] = useState<any>({});
   const [service, setService] = useState<any>(null);
@@ -38,7 +38,7 @@ const BookingDateTime = () => {
     // Parse booking info
     if (infoParam) {
       try {
-        const parsedInfo = JSON.parse(decodeURIComponent(infoParam));
+        const parsedInfo = JSON.parse(decodeURIComponent(Array.isArray(infoParam) ? infoParam[0] : infoParam));
         setBookingInfo(parsedInfo);
       } catch (e) {
         console.error("Error parsing booking info:", e);
@@ -52,7 +52,7 @@ const BookingDateTime = () => {
         setService(serviceDetails);
         
         // Get subscription plan
-        const plans = getSubscriptionPlansForService(id);
+        const plans = getSubscriptionPlansForService(Array.isArray(id) ? id[0] : id);
         const plan = plans.find(p => p.id === planId);
         if (plan) {
           setSubscriptionPlan(plan);
@@ -78,7 +78,7 @@ const BookingDateTime = () => {
     };
     
     // Navigate to payment
-    navigate(`/booking/${id}/payment?planId=${planId}&info=${encodeURIComponent(JSON.stringify(updatedBookingInfo))}`);
+    router.push(`/booking/${id}/payment?planId=${planId}&info=${encodeURIComponent(JSON.stringify(updatedBookingInfo))}`);
   };
   
   if (!service || !subscriptionPlan) {
@@ -95,7 +95,7 @@ const BookingDateTime = () => {
       <header className="bg-white px-4 py-4 sticky top-0 z-20 shadow-sm">
         <div className="flex items-center gap-3">
           <Link 
-            to={`/booking/${id}?planId=${planId}`} 
+            href={`/booking/${id}?planId=${planId}`} 
             className="text-gray-800"
           >
             <ChevronLeft size={24} />

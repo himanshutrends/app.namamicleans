@@ -1,13 +1,15 @@
-
+"use client";
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
 import { ChevronLeft, Star, Clock, Package, Info, Check, ChevronDown, ChevronUp, ShoppingCart } from "lucide-react";
 import BottomNavigation from "@/components/layout/BottomNavigation";
 import { services, getSubscriptionPlansForService } from "@/data/services";
 import { SubscriptionPlan } from "@/data/models";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const ServiceDetail = () => {
-  const { id } = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const [selectedPlan, setSelectedPlan] = useState<string>("");
   const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
     details: true,
@@ -24,7 +26,7 @@ const ServiceDetail = () => {
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <h2 className="text-xl font-semibold mb-2">Service not found</h2>
         <p className="text-gray-600 mb-4">The service you're looking for doesn't exist or may have been removed.</p>
-        <Link to="/" className="bg-teal-600 text-white px-4 py-2 rounded-full">
+        <Link href="/" className="bg-teal-600 text-white px-4 py-2 rounded-full">
           Go back to home
         </Link>
       </div>
@@ -52,8 +54,7 @@ const ServiceDetail = () => {
           className="w-full h-full object-cover"
         />
         <Link
-          to="/"
-          className="absolute top-4 left-4 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm"
+          href="/"
         >
           <ChevronLeft size={20} />
         </Link>
@@ -237,7 +238,7 @@ const ServiceDetail = () => {
           <ShoppingCart size={20} className="text-gray-700" />
         </button>
         <Link
-          to={selectedPlan ? `/booking/${service.id}?planId=${selectedPlan}` : "#"}
+          href={selectedPlan ? `/booking/${service.id}?planId=${selectedPlan}` : "#"}
           className={`flex-1 ml-3 py-3 rounded-full text-center font-medium ${
             selectedPlan 
               ? "bg-teal-600 text-white" 
